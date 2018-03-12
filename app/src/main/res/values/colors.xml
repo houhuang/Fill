@@ -6,4 +6,16 @@
 
     <color name="color_bg_white">#55999999</color>
     <color name="color_bg_black">#55666666</color>
+
+
+    <color name="color_paht1">#FF6A44</color>
+    <color name="color_paht2">#E9B11B</color>
+    <color name="color_paht3">#C8B864</color>
+    <color name="color_paht4">#6ABD78</color>
+    <color name="color_paht5">#9BC99F</color>
+    <color name="color_paht6">#E4BBC1</color>
+    <color name="color_paht7">#79A8DA</color>
+    <color name="color_paht8">#A9C8DD</color>
+    <color name="color_paht9">#B778A8</color>
+    <color name="color_paht10">#9C97C9</color>
 </resources>

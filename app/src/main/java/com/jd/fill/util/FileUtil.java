@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.jd.fill.R;
 import com.jd.fill.bean.GameItemInfo;
@@ -64,7 +65,7 @@ public class FileUtil {
                 itemInfo.setRow(Integer.parseInt(object.getString("row")));
                 itemInfo.setCol(Integer.parseInt(object.getString("col")));
 
-                String str = object.getString(object.getString("state"));
+                String str = object.getString("state");
 
                 if (str.length() != itemInfo.getCol() * itemInfo.getRow())
                 {
@@ -75,9 +76,10 @@ public class FileUtil {
                     int[] st = new int[state.length];
                     for (int j = 0; j < state.length; ++j)
                     {
-                        st[j] = state[j];
+                        st[j] = Integer.parseInt(String.valueOf(state[j]));
                     }
                     itemInfo.setState(st);
+                    list.add(itemInfo);
                 }
 
             }

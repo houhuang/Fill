@@ -9,7 +9,8 @@
     <com.jd.fill.view.GameView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:layout_margin="20px">
 
     </com.jd.fill.view.GameView>
 

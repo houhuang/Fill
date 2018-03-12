@@ -1,6 +1,7 @@
 package com.jd.fill.view;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -11,10 +12,16 @@ import android.view.WindowManager;
 import android.widget.GridLayout;
 import android.widget.Toast;
 
+import com.jd.fill.R;
 import com.jd.fill.bean.GameItem;
+import com.jd.fill.bean.GameItemInfo;
+import com.jd.fill.config.Config;
+import com.jd.fill.manager.DataManager;
+import com.jd.fill.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Administrator on 2018/3/11 0011.
@@ -30,7 +37,6 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     private int mStartX, mStartY;
 
-
     private int[][] mGameMatrixHistory;
 
     private int mScoreHistory;
@@ -44,15 +50,32 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     private GameItem clickItem;
 
+    private GameItemInfo mItemInfo;
+
+    private Context mContext;
+
+    private int[] mPathColor = {R.color.color_paht1,
+            R.color.color_paht2,
+            R.color.color_paht3,
+            R.color.color_paht4,
+            R.color.color_paht5,
+            R.color.color_paht6,
+            R.color.color_paht7,
+            R.color.color_paht8,
+            R.color.color_paht9,
+            R.color.color_paht10};
+
     public GameView(Context context)
     {
         super(context);
+        mContext = context;
         initGameMatrix();
     }
 
     public GameView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        mContext = context;
         initGameMatrix();
     }
 
@@ -62,9 +85,47 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 //        initGameView(Config.mItemSize);
     }
 
+    public void initGameMatrix()
+    {
+
+        SharedPreferences.Editor editor = Config.mSp.edit();
+        editor.putInt(Config.KEY_CURRENT_LEVEL, 1);
+        editor.commit();
+
+        mItemInfo = DataManager.getInstance().getmGameInfo().get(Config.mSp.getInt(Config.KEY_CURRENT_LEVEL, 0));
+
+        //初始化矩阵
+        removeAllViews();
+        mScoreHistory = 0;
+
+        mGameHLines = mItemInfo.getRow();
+        mGameVLines = mItemInfo.getCol();
+        mGameMatrix = new GameItem[mGameHLines][mGameVLines];
+        mGameMatrixHistory = new int[mGameHLines][mGameVLines];
+
+        setColumnCount(mGameVLines);
+        setRowCount(mGameHLines);
+        setOnTouchListener(this);
+
+        //初始化View参数
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager wm = (WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        display.getMetrics(metrics);
+
+        int size = (int)(metrics.widthPixels - 20 * ScreenUtil.getScreenDensity(mContext)) / 6;
+
+
+        initGameView(size);
+    }
+
     private void initGameView(int cardSize)
     {
         boolean isTrue = false;
+
+        Random random = new Random();
+        int cIndex = random.nextInt(10);
+
 
         removeAllViews();
         GameItem card;
@@ -93,9 +154,8 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                     }
                 }
 
-                card = new GameItem(getContext(), isTrue);
+                card = new GameItem(getContext(), isTrue, mPathColor[cIndex]);
                 addView(card, cardSize, cardSize);
-
 
 
                 // 初始化GameMatrix全部为0 空格List为所有
@@ -103,53 +163,30 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                 mGameMatrix[i][j].setRow(i);
                 mGameMatrix[i][j].setCol(j);
 
-                if (i == j && i == mGameHLines - 1 )
+                int index = i * mGameVLines + j;
+                if (mItemInfo.getState()[index] == 0)
                 {
-//                    mBlanks.add(new Point(i, j));
+                    //stone
                     mGameMatrix[i][j].setItemTag(0);
-                }else
+                }else if (mItemInfo.getState()[index] == 1)
                 {
+                    //radish
                     mGameMatrix[i][j].setItemTag(1);
                     mNeedClickItem ++;
+                }else if (mItemInfo.getState()[index] == 2)
+                {
+                    // start radish
+                    mGameMatrix[i][j].setItemTag(2);
+                    mNeedClickItem ++;
+
+                    mFirstItem = mGameMatrix[i][j];
+                    mCurrentItem = mFirstItem;
                 }
+
 
             }
         }
 
-        mFirstItem = mGameMatrix[1][1];
-        mCurrentItem = mFirstItem;
-
-    }
-
-    public void initGameMatrix()
-    {
-        //初始化矩阵
-        removeAllViews();
-        mScoreHistory = 0;
-
-        mGameHLines = 5;
-        mGameVLines = 7;
-        mGameMatrix = new GameItem[mGameHLines][mGameVLines];
-        mGameMatrixHistory = new int[mGameHLines][mGameVLines];
-
-        setColumnCount(mGameVLines);
-        setRowCount(mGameHLines);
-        setOnTouchListener(this);
-
-        //初始化View参数
-        DisplayMetrics metrics = new DisplayMetrics();
-        WindowManager wm = (WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        display.getMetrics(metrics);
-
-        int size = metrics.widthPixels / (mGameVLines > mGameHLines ? mGameVLines : mGameHLines);
-
-        if (size > metrics.widthPixels / 6)
-        {
-            size = metrics.widthPixels / 6;
-        }
-
-        initGameView(size);
     }
 
 

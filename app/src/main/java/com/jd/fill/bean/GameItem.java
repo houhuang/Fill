@@ -33,20 +33,21 @@ public class GameItem extends FrameLayout {
     private int row = 0;
     private int col = 0;
 
-    private int mItemWidth;
-
     private LeftAndTopView mPathView;
     private ImageView contentImage;
+
+    private int mColor;
 
     private final int[] stone = {R.drawable.ston1, R.drawable.ston2,
             R.drawable.ston3, R.drawable.ston4,
             R.drawable.ston5, R.drawable.ston6};
 
-    public GameItem(Context context, boolean isWhite)
+    public GameItem(Context context, boolean isWhite, int color)
     {
         super(context);
         this.isWhite = isWhite;
         mContext = context;
+        mColor = color;
 
         initCardItem();
     }
@@ -68,7 +69,7 @@ public class GameItem extends FrameLayout {
         view.setLayoutParams(vp);
         addView(view);
 
-        mPathView = new LeftAndTopView(mContext , LeftAndTopView.ItemType.RightAndBottom, R.color.colorAccent);
+        mPathView = new LeftAndTopView(mContext , LeftAndTopView.ItemType.RightAndBottom, mColor);
         LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         mPathView.setLayoutParams(lp);
         addView(mPathView);
@@ -151,13 +152,19 @@ public class GameItem extends FrameLayout {
             int id = random.nextInt(6);
 
             contentImage.setImageBitmap(FileUtil.getBitmapFromDrawable(mContext, stone[id]));
-            float scaleX = 0.5F;
+            float scaleX = 0.7F;
             contentImage.setScaleX(scaleX);
             contentImage.setScaleY(scaleX);
         }else if (mItemTag == 1)
         {
             contentImage.setImageBitmap(FileUtil.getBitmapFromDrawable(mContext, R.drawable.luobo));
             float scaleX = 0.5F;
+            contentImage.setScaleX(scaleX);
+            contentImage.setScaleY(scaleX);
+        }else if (mItemTag == 2)
+        {
+            contentImage.setImageBitmap(FileUtil.getBitmapFromDrawable(mContext, R.drawable.luobo));
+            float scaleX = 1.0F;
             contentImage.setScaleX(scaleX);
             contentImage.setScaleY(scaleX);
         }

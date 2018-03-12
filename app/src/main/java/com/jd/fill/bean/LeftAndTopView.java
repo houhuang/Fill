@@ -42,7 +42,7 @@ public class LeftAndTopView extends View {
     private boolean DrawLeft = false;
     private boolean DrawRight = false;
 
-    private static final double ITEM_WIDTH = 0.6;
+    private static final double ITEM_WIDTH = 0.75;
 
     private ItemDir mItemDIr = ItemDir.NONE;
 
@@ -158,18 +158,18 @@ public class LeftAndTopView extends View {
     {
         if (DrawTop)
         {
-            canvas.drawRect(new Rect((int) (getMeasuredHeight() * 0.2),
+            canvas.drawRect(new Rect((int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
                     0,
-                    (int) (getMeasuredWidth() * 0.8),
-                    (int) (getMeasuredHeight() * 0.8)), mPaint);
+                    (int) (getMeasuredWidth() * ITEM_WIDTH),
+                    (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
 
         }
 
         if (DrawBottom)
         {
-            canvas.drawRect(new Rect((int) (getMeasuredHeight() * 0.2),
-                    (int) (getMeasuredHeight() * 0.2),
-                    (int) (getMeasuredWidth() * 0.8),
+            canvas.drawRect(new Rect((int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
+                    (int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
+                    (int) (getMeasuredWidth() * ITEM_WIDTH),
                     (int) (getMeasuredHeight() * 1.0)), mPaint);
 
         }
@@ -177,18 +177,18 @@ public class LeftAndTopView extends View {
         if (DrawLeft)
         {
             canvas.drawRect(new Rect(0,
-                    (int) (getMeasuredHeight() * 0.2),
-                    (int) (getMeasuredWidth() * 0.8),
-                    (int) (getMeasuredHeight() * 0.8)), mPaint);
+                    (int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
+                    (int) (getMeasuredWidth() * ITEM_WIDTH),
+                    (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
 
         }
 
         if (DrawRight)
         {
-            canvas.drawRect(new Rect((int) (getMeasuredHeight() * 0.2),
-                    (int) (getMeasuredHeight() * 0.2),
+            canvas.drawRect(new Rect((int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
+                    (int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
                     (int) (getMeasuredWidth() * 1.0),
-                    (int) (getMeasuredHeight() * 0.8)), mPaint);
+                    (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
 
         }
 
@@ -230,9 +230,9 @@ public class LeftAndTopView extends View {
         switch (mItemType) {
             case Level:
                 canvas.drawRect(new Rect(0,
-                        (int) (getMeasuredHeight() * 0.2),
+                        (int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
                         (int) (getMeasuredWidth() * 1.0),
-                        (int) (getMeasuredHeight() * 0.8)), mPaint);
+                        (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
 
                 mPaint.setColor(Color.WHITE);
                 canvas.drawLine(0, (int) (getMeasuredHeight() * 0.5),
@@ -241,9 +241,9 @@ public class LeftAndTopView extends View {
                 break;
 
             case Vertical:
-                canvas.drawRect(new Rect((int) (getMeasuredWidth() * 0.2),
+                canvas.drawRect(new Rect((int) (getMeasuredWidth() * (1 - ITEM_WIDTH)),
                         0,
-                        (int) (getMeasuredWidth() * 0.8),
+                        (int) (getMeasuredWidth() * ITEM_WIDTH),
                         (int) (getMeasuredHeight() * 1.0)), mPaint);
 
                 mPaint.setColor(Color.WHITE);
@@ -254,13 +254,13 @@ public class LeftAndTopView extends View {
 
             case LeftAndTop:
                 canvas.drawRect(new Rect(0,
-                        (int) (getMeasuredHeight() * 0.2),
-                        (int) (getMeasuredWidth() * 0.8),
-                        (int) (getMeasuredHeight() * 0.8)), mPaint);
+                        (int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
+                        (int) (getMeasuredWidth() * ITEM_WIDTH),
+                        (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
 
-                canvas.drawRect(new Rect((int) (getMeasuredWidth() * 0.2), 0,
-                        (int) (getMeasuredWidth() * 0.8),
-                        (int) (getMeasuredHeight() * 0.2)), mPaint);
+                canvas.drawRect(new Rect((int) (getMeasuredWidth() * (1 - ITEM_WIDTH)), 0,
+                        (int) (getMeasuredWidth() * ITEM_WIDTH),
+                        (int) (getMeasuredHeight() * (1 - ITEM_WIDTH))), mPaint);
 
 
                 mPaint.setColor(Color.WHITE);
@@ -276,13 +276,13 @@ public class LeftAndTopView extends View {
 
             case LeftAndBottom:
                 canvas.drawRect(new Rect(0,
-                        (int) (getMeasuredHeight() * 0.2),
-                        (int) (getMeasuredWidth() * 0.8),
-                        (int) (getMeasuredHeight() * 0.8)), mPaint);
+                        (int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
+                        (int) (getMeasuredWidth() * ITEM_WIDTH),
+                        (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
 
-                canvas.drawRect(new Rect((int) (getMeasuredWidth() * 0.2), (int) (getMeasuredHeight() * 1.0),
-                        (int) (getMeasuredWidth() * 0.8),
-                        (int) (getMeasuredHeight() * 0.8)), mPaint);
+                canvas.drawRect(new Rect((int) (getMeasuredWidth() * (1 - ITEM_WIDTH)), (int) (getMeasuredHeight() * 1.0),
+                        (int) (getMeasuredWidth() * ITEM_WIDTH),
+                        (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
 
 
                 mPaint.setColor(Color.WHITE);
@@ -297,14 +297,14 @@ public class LeftAndTopView extends View {
                 break;
 
             case RightAndTop:
-                canvas.drawRect(new Rect((int) (getMeasuredHeight() * 0.2),
-                        (int) (getMeasuredHeight() * 0.2),
+                canvas.drawRect(new Rect((int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
+                        (int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
                         (int) (getMeasuredWidth() * 1.0),
-                        (int) (getMeasuredHeight() * 0.8)), mPaint);
+                        (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
 
-                canvas.drawRect(new Rect((int) (getMeasuredWidth() * 0.2), 0,
-                        (int) (getMeasuredWidth() * 0.8),
-                        (int) (getMeasuredHeight() * 0.2)), mPaint);
+                canvas.drawRect(new Rect((int) (getMeasuredWidth() * (1 - ITEM_WIDTH)), 0,
+                        (int) (getMeasuredWidth() * ITEM_WIDTH),
+                        (int) (getMeasuredHeight() * (1 - ITEM_WIDTH))), mPaint);
 
 
                 mPaint.setColor(Color.WHITE);
@@ -319,14 +319,14 @@ public class LeftAndTopView extends View {
                 break;
 
             case RightAndBottom:
-                canvas.drawRect(new Rect((int) (getMeasuredHeight() * 0.2),
-                        (int) (getMeasuredHeight() * 0.2),
+                canvas.drawRect(new Rect((int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
+                        (int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
                         (int) (getMeasuredWidth() * 1.0),
-                        (int) (getMeasuredHeight() * 0.8)), mPaint);
+                        (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
 
-                canvas.drawRect(new Rect((int) (getMeasuredWidth() * 0.2), (int) (getMeasuredWidth() * 1.0),
-                        (int) (getMeasuredWidth() * 0.8),
-                        (int) (getMeasuredHeight() * 0.8)), mPaint);
+                canvas.drawRect(new Rect((int) (getMeasuredWidth() * (1 - ITEM_WIDTH)), (int) (getMeasuredWidth() * 1.0),
+                        (int) (getMeasuredWidth() * ITEM_WIDTH),
+                        (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
 
 
                 mPaint.setColor(Color.WHITE);
