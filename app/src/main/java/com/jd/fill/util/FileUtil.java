@@ -33,9 +33,10 @@ public class FileUtil {
     public static Bitmap getBitmapFromDrawable(Context context, int id)
     {
         BitmapFactory.Options opt = new BitmapFactory.Options();
-        opt.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        opt.inPreferredConfig = Bitmap.Config.RGB_565;
 
         InputStream is = context.getResources().openRawResource(id);
+
         return BitmapFactory.decodeStream(is, null, opt);
 
     }

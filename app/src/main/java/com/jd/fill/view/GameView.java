@@ -2,6 +2,7 @@ package com.jd.fill.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -17,6 +18,7 @@ import com.jd.fill.bean.GameItem;
 import com.jd.fill.bean.GameItemInfo;
 import com.jd.fill.config.Config;
 import com.jd.fill.manager.DataManager;
+import com.jd.fill.util.FileUtil;
 import com.jd.fill.util.ScreenUtil;
 
 import java.util.ArrayList;
@@ -54,6 +56,9 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     private Context mContext;
 
+    private Bitmap mRadishWhite;
+    private Bitmap mRadishRed;
+
     private int[] mPathColor = {R.color.color_paht1,
             R.color.color_paht2,
             R.color.color_paht3,
@@ -87,6 +92,8 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     public void initGameMatrix()
     {
+        mRadishWhite = FileUtil.getBitmapFromDrawable(mContext, R.drawable.luobo2);
+        mRadishRed = FileUtil.getBitmapFromDrawable(mContext, R.drawable.luobo);
 
         SharedPreferences.Editor editor = Config.mSp.edit();
         editor.putInt(Config.KEY_CURRENT_LEVEL, 1);
@@ -154,7 +161,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                     }
                 }
 
-                card = new GameItem(getContext(), isTrue, mPathColor[cIndex]);
+                card = new GameItem(getContext(), isTrue, mPathColor[cIndex], mRadishRed, mRadishWhite);
                 addView(card, cardSize, cardSize);
 
 
@@ -167,16 +174,16 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                 if (mItemInfo.getState()[index] == 0)
                 {
                     //stone
-                    mGameMatrix[i][j].setItemTag(0);
+                    mGameMatrix[i][j].setItemTag(0, mRadishRed);
                 }else if (mItemInfo.getState()[index] == 1)
                 {
                     //radish
-                    mGameMatrix[i][j].setItemTag(1);
+                    mGameMatrix[i][j].setItemTag(1, mRadishRed);
                     mNeedClickItem ++;
                 }else if (mItemInfo.getState()[index] == 2)
                 {
                     // start radish
-                    mGameMatrix[i][j].setItemTag(2);
+                    mGameMatrix[i][j].setItemTag(2, mRadishRed);
                     mNeedClickItem ++;
 
                     mFirstItem = mGameMatrix[i][j];
@@ -226,6 +233,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                         for (int i = 0; i < mAlreadyClickItem.size(); ++i)
                         {
                             mAlreadyClickItem.get(i).clearPathFromDir();
+                            mAlreadyClickItem.get(i).setRadishColor(true);
                         }
                         mAlreadyClickItem.clear();
                         mCurrentItem = mFirstItem;
@@ -248,6 +256,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                             {
                                 mAlreadyClickItem.get(mAlreadyClickItem.size() - 1).clearPathFromDir();
 
+                                mAlreadyClickItem.get(mAlreadyClickItem.size() - 1).setRadishColor(true);
                                 mAlreadyClickItem.remove(mAlreadyClickItem.size() - 1);
                             }
                             mCurrentItem = mAlreadyClickItem.get(mAlreadyClickItem.size() - 1);
@@ -275,6 +284,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                                 mCurrentItem.showPathFromDir();
 
                                 mCurrentItem = item;
+                                mCurrentItem.setRadishColor(false);
                                 mAlreadyClickItem.add(mCurrentItem);
 
                                 if (moveDir == 1)
@@ -328,6 +338,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                             {
                                 mAlreadyClickItem.get(mAlreadyClickItem.size() - 1).clearPathFromDir();
 
+                                mAlreadyClickItem.get(mAlreadyClickItem.size() - 1).setRadishColor(true);
                                 mAlreadyClickItem.remove(mAlreadyClickItem.size() - 1);
                             }
 

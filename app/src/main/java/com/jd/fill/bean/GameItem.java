@@ -1,6 +1,7 @@
 package com.jd.fill.bean;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.view.Gravity;
@@ -42,18 +43,25 @@ public class GameItem extends FrameLayout {
             R.drawable.ston3, R.drawable.ston4,
             R.drawable.ston5, R.drawable.ston6};
 
-    public GameItem(Context context, boolean isWhite, int color)
+    private Bitmap mRadishWhite;
+    private Bitmap mRadishRed;
+
+    public GameItem(Context context, boolean isWhite, int color, Bitmap red, Bitmap white)
     {
         super(context);
         this.isWhite = isWhite;
         mContext = context;
         mColor = color;
 
+        mRadishRed = red;
+        mRadishWhite = white;
+
         initCardItem();
     }
 
     private void initCardItem()
     {
+
         View view = new View(mContext);
 
         if (isWhite)
@@ -83,6 +91,20 @@ public class GameItem extends FrameLayout {
 //        contentImage.setLayoutParams(layout);
 
         addView(contentImage);
+    }
+
+    public void setRadishColor(boolean isRed)
+    {
+        if (mItemTag == 2)
+            return;
+
+        if (isRed)
+        {
+            contentImage.setImageBitmap(mRadishRed);
+        }else
+        {
+            contentImage.setImageBitmap(mRadishWhite);
+        }
     }
 
     public void setDrawTop(boolean bool)
@@ -142,7 +164,7 @@ public class GameItem extends FrameLayout {
         return mItemTag;
     }
 
-    public void setItemTag(int tag)
+    public void setItemTag(int tag, Bitmap bitmap)
     {
         mItemTag = tag;
 
@@ -157,7 +179,7 @@ public class GameItem extends FrameLayout {
             contentImage.setScaleY(scaleX);
         }else if (mItemTag == 1)
         {
-            contentImage.setImageBitmap(FileUtil.getBitmapFromDrawable(mContext, R.drawable.luobo));
+            contentImage.setImageBitmap(bitmap);
             float scaleX = 0.5F;
             contentImage.setScaleX(scaleX);
             contentImage.setScaleY(scaleX);
