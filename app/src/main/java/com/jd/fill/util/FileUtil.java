@@ -66,6 +66,9 @@ public class FileUtil {
                 itemInfo.setRow(Integer.parseInt(object.getString("row")));
                 itemInfo.setCol(Integer.parseInt(object.getString("col")));
 
+                String hintStr = object.getString("hint");
+                itemInfo.setHint(hintStr.toCharArray());
+
                 String str = object.getString("state");
 
                 if (str.length() != itemInfo.getCol() * itemInfo.getRow())
@@ -82,6 +85,8 @@ public class FileUtil {
                     itemInfo.setState(st);
                     list.add(itemInfo);
                 }
+
+
 
             }
 

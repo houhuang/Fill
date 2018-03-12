@@ -7,6 +7,7 @@ public class GameItemInfo {
     private int row;
     private int col;
     private int[] state;
+    private char[] hint;
 
     public int getRow() {
         return row;
@@ -30,5 +31,13 @@ public class GameItemInfo {
 
     public void setState(int[] state) {
         this.state = state;
+    }
+
+    public char[] getHint() {
+        return hint;
+    }
+
+    public void setHint(char[] hint) {
+        this.hint = hint;
     }
 }

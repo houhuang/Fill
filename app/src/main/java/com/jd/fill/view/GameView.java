@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Toast;
 
@@ -58,6 +60,8 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     private Bitmap mRadishWhite;
     private Bitmap mRadishRed;
+
+    private int mHintIndex = 1;
 
     private int[] mPathColor = {R.color.color_paht1,
             R.color.color_paht2,
@@ -345,6 +349,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                             if (mAlreadyClickItem.size() == 0)
                             {
                                 mCurrentItem = mFirstItem;
+                                mCurrentItem.clearPathFromDir();
                             }else
                             {
                                 mCurrentItem = mAlreadyClickItem.get(mAlreadyClickItem.size() - 1);
@@ -367,6 +372,86 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         return true;
     }
 
+    public void hint()
+    {
+        if (mHintIndex > 3)
+            return;
+        int count = mHintIndex * 5;
+        if (count > mNeedClickItem)
+            count = mNeedClickItem;
+
+        for (int i = 0; i < mAlreadyClickItem.size(); ++i)
+        {
+            mAlreadyClickItem.get(i).clearPathFromDir();
+            mAlreadyClickItem.get(i).setRadishColor(true);
+        }
+        mAlreadyClickItem.clear();
+        mCurrentItem = mFirstItem;
+        mCurrentItem.clearPathFromDir();
+
+        mAlreadyClickItem.add(mCurrentItem);
+        for (int i = 0; i < count; ++i)
+        {
+            int row =  mCurrentItem.getRow();
+            int col = mCurrentItem.getCol();
+
+            char dir = mItemInfo.getHint()[i];
+            if (dir == 'w')
+            {
+                mCurrentItem.setDrawTop(true);
+                mCurrentItem.showPathFromDir();
+                mCurrentItem.setRadishColor(false);
+
+                GameItem item = mGameMatrix[row - 1][col];
+                item.setDrawBottom(true);
+                mAlreadyClickItem.add(item);
+
+                mCurrentItem = item;
+            }else if (dir == 's')
+            {
+                mCurrentItem.setDrawBottom(true);
+                mCurrentItem.showPathFromDir();
+                mCurrentItem.setRadishColor(false);
+
+                GameItem item = mGameMatrix[row + 1][col];
+                item.setDrawTop(true);
+                mAlreadyClickItem.add(item);
+
+                mCurrentItem = item;
+
+            }else if (dir == 'a')
+            {
+                mCurrentItem.setDrawLeft(true);
+                mCurrentItem.showPathFromDir();
+                mCurrentItem.setRadishColor(false);
+
+                GameItem item = mGameMatrix[row][col - 1];
+                item.setDrawRight(true);
+                mAlreadyClickItem.add(item);
+
+                mCurrentItem = item;
+
+            }else if (dir == 'd')
+            {
+                mCurrentItem.setDrawRight(true);
+                mCurrentItem.showPathFromDir();
+                mCurrentItem.setRadishColor(false);
+
+                GameItem item = mGameMatrix[row][col + 1];
+                item.setDrawLeft(true);
+                mAlreadyClickItem.add(item);
+
+                mCurrentItem = item;
+            }
+
+        }
+
+        mCurrentItem.showPathFromDir();
+        mCurrentItem.setRadishColor(false);
+
+        mHintIndex ++;
+
+    }
 
     private boolean isCompleted()
     {
