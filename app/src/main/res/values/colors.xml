@@ -4,10 +4,15 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="status_bar_transpatent">#00000000</color>
+    <color name="transpatent">#00000000</color>
     <color name="color_bg_white">#55999999</color>
     <color name="color_bg_black">#55666666</color>
 
+    <color name="toolbar_line">#888888</color>
+
+    <color name="map_item_bg">#55999999</color>
+    <color name="map_item_content_pass">#6ABD78</color>
+    <color name="map_item_content_nopass">#88000000</color>
 
     <color name="color_paht1">#FF6A44</color>
     <color name="color_paht2">#E9B11B</color>

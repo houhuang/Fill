@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.jd.fill.R;
 import com.jd.fill.config.Config;
+import com.jd.fill.manager.DataManager;
 import com.jd.fill.util.FileUtil;
 import com.jd.fill.util.StatusBarUtil;
 
@@ -26,7 +27,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        StatusBarUtil.setWindowStatusBarColor(this, R.color.status_bar_transpatent);
+        DataManager.getInstance().initData(this);
+
+        StatusBarUtil.setWindowStatusBarColor(this, R.color.transpatent);
         StatusBarUtil.StatusBarLightMode(this);
 
         bindView();
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.btn_play:
-                Intent intent = new Intent(this, GameActivity.class);
+                Intent intent = new Intent(this, MapActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_share:

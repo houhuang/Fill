@@ -97,11 +97,11 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     public void initGameMatrix()
     {
-        mRadishWhite = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish2);
-        mRadishRed = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish);
+        mRadishWhite = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish);
+        mRadishRed = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish2);
 
         SharedPreferences.Editor editor = Config.mSp.edit();
-        editor.putInt(Config.KEY_CURRENT_LEVEL, 1);
+        editor.putInt(Config.KEY_CURRENT_LEVEL, 11);
         editor.commit();
 
         mItemInfo = DataManager.getInstance().getmGameInfo().get(Config.mSp.getInt(Config.KEY_CURRENT_LEVEL, 0));

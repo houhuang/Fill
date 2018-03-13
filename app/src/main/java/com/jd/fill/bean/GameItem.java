@@ -190,7 +190,7 @@ public class GameItem extends FrameLayout {
             Random random = new Random();
             int id = random.nextInt(3);
 
-            contentImage.setImageBitmap(FileUtil.getBitmapFromDrawable(mContext, rabbit[2]));
+            contentImage.setImageBitmap(FileUtil.getBitmapFromDrawable(mContext, rabbit[1]));
             float scaleX = 1.0F;
             contentImage.setScaleX(scaleX);
             contentImage.setScaleY(scaleX);

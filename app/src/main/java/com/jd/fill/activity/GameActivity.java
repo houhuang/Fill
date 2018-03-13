@@ -20,8 +20,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        DataManager.getInstance().initData(this);
         setContentView(R.layout.activity_game);
 
         mBtnHint = (Button)findViewById(R.id.btn_hint);
