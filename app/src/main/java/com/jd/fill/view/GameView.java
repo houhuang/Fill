@@ -63,7 +63,8 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     private int mHintIndex = 1;
 
-    private int[] mPathColor = {R.color.color_paht1,
+    private int[] mPathColor = {
+            R.color.color_paht1,
             R.color.color_paht2,
             R.color.color_paht3,
             R.color.color_paht4,
@@ -97,7 +98,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
     public void initGameMatrix()
     {
         mRadishWhite = FileUtil.getBitmapFromDrawable(mContext, R.drawable.luobo2);
-        mRadishRed = FileUtil.getBitmapFromDrawable(mContext, R.drawable.luobo);
+        mRadishRed = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish);
 
         SharedPreferences.Editor editor = Config.mSp.edit();
         editor.putInt(Config.KEY_CURRENT_LEVEL, 1);
@@ -375,7 +376,11 @@ public class GameView extends GridLayout implements View.OnTouchListener {
     public void hint()
     {
         if (mHintIndex > 3)
+        {
+            Toast.makeText(mContext, "Three hints a maximum of each level.", Toast.LENGTH_SHORT).show();
             return;
+        }
+
         int count = mHintIndex * 5;
         if (count > mNeedClickItem)
             count = mNeedClickItem;
@@ -443,7 +448,6 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
                 mCurrentItem = item;
             }
-
         }
 
         mCurrentItem.showPathFromDir();

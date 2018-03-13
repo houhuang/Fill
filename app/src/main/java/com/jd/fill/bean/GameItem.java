@@ -43,6 +43,8 @@ public class GameItem extends FrameLayout {
             R.drawable.ston3, R.drawable.ston4,
             R.drawable.ston5, R.drawable.ston6};
 
+    private final int[] rabbit = {R.drawable.rabbit1, R.drawable.rabbit2, R.drawable.rabbit3};
+
     private Bitmap mRadishWhite;
     private Bitmap mRadishRed;
 
@@ -185,7 +187,10 @@ public class GameItem extends FrameLayout {
             contentImage.setScaleY(scaleX);
         }else if (mItemTag == 2)
         {
-            contentImage.setImageBitmap(FileUtil.getBitmapFromDrawable(mContext, R.drawable.luobo));
+            Random random = new Random();
+            int id = random.nextInt(3);
+
+            contentImage.setImageBitmap(FileUtil.getBitmapFromDrawable(mContext, rabbit[2]));
             float scaleX = 1.0F;
             contentImage.setScaleX(scaleX);
             contentImage.setScaleY(scaleX);
