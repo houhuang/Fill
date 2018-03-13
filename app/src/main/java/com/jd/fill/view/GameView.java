@@ -97,7 +97,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     public void initGameMatrix()
     {
-        mRadishWhite = FileUtil.getBitmapFromDrawable(mContext, R.drawable.luobo2);
+        mRadishWhite = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish2);
         mRadishRed = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish);
 
         SharedPreferences.Editor editor = Config.mSp.edit();
@@ -375,7 +375,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     public void hint()
     {
-        if (mHintIndex > 3)
+        if (mHintIndex > 3 )
         {
             Toast.makeText(mContext, "Three hints a maximum of each level.", Toast.LENGTH_SHORT).show();
             return;
