@@ -70,6 +70,18 @@ public class GameView extends GridLayout implements View.OnTouchListener {
             R.color.color_paht9,
             R.color.color_paht10};
 
+    public OnGameCompletedListener listener;
+
+    public interface OnGameCompletedListener
+    {
+        void OnCompleted();
+    }
+
+    public void setGameViewListener(OnGameCompletedListener listener)
+    {
+        this.listener = listener;
+    }
+
     public GameView(Context context)
     {
         super(context);
@@ -300,7 +312,10 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
                                 if (isCompleted())
                                 {
-                                    completed();
+                                    if (listener != null)
+                                    {
+                                        listener.OnCompleted();
+                                    }
 
                                 }
                             }
@@ -365,12 +380,6 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         return true;
     }
 
-    public void completed()
-    {
-        Config.mCurrentLevel ++;
-        Config.saveConfigInfo();
-        Toast.makeText(getContext(), "Completed!!!", Toast.LENGTH_LONG).show();
-    }
 
     public void hint()
     {
