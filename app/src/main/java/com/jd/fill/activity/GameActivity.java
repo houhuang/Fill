@@ -37,9 +37,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mGameView.setGameViewListener(new GameView.OnGameCompletedListener() {
             @Override
             public void OnCompleted() {
-                Config.mCurrentLevel ++;
-                Config.saveConfigInfo();
+
                 showWinFragment();
+                if (Config.mChooseLevel == Config.mCurrentLevel)
+                {
+                    Config.mCurrentLevel ++;
+                    Config.saveConfigInfo();
+                }
+
             }
         });
 
@@ -54,7 +59,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         mFragmentParent = (FrameLayout)findViewById(R.id.win_fragment_parent);
         mFragmentParent.setForegroundGravity(10);
-//        hideWinFragment();
+        hideWinFragment();
     }
 
     private void hideWinFragment()
@@ -64,7 +69,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showWinFragment()
     {
+        mWinFragment.updateContent();
         mFragmentParent.setVisibility(View.VISIBLE);
+
     }
 
     @Override

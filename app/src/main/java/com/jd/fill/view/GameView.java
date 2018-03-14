@@ -108,7 +108,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         mRadishRed = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish);
 
 
-        mItemInfo = DataManager.getInstance().getmGameInfo().get(Config.mCurrentLevel);
+        mItemInfo = DataManager.getInstance().getmGameInfo().get(Config.mChooseLevel);
 
         //初始化矩阵
         removeAllViews();

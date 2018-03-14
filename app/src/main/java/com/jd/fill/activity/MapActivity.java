@@ -57,6 +57,7 @@ public class MapActivity extends AppCompatActivity {
 
                 if (Config.mCurrentLevel >= position)
                 {
+                    Config.mChooseLevel = position;
                     Intent intent = new Intent(MapActivity.this, GameActivity.class);
                     startActivity(intent);
                 }

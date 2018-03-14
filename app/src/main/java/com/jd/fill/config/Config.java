@@ -15,6 +15,8 @@ public class Config extends Application {
 
     public static boolean mSoundsIsOpen;
 
+    public static int mChooseLevel = 0;
+
     public static String SP_DATA_STORGE = "SP_DATA_STORGE";
     public static String KEY_CURRENT_LEVEL = "KEY_CURRENT_LEVEL";
     public static String KEY_SHOUNDS_ISOPEN = "KEY_SHOUNDS_ISOPEN";
@@ -26,6 +28,7 @@ public class Config extends Application {
         mSp = getSharedPreferences(SP_DATA_STORGE, 0);
         mCurrentLevel = mSp.getInt(KEY_CURRENT_LEVEL, 0);
         mSoundsIsOpen = mSp.getBoolean(KEY_SHOUNDS_ISOPEN, true);
+
     }
 
     public static void saveConfigInfo()
