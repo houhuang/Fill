@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jd.fill.R;
+import com.jd.fill.config.Config;
 
 import org.w3c.dom.Text;
 
@@ -25,7 +27,6 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.MapHolder> {
     private Context mContext;
 
     private int mTotalLevel = 0;
-    private int mCurrentLevel = 0;
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_NORMAL = 1;
@@ -41,17 +42,17 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.MapHolder> {
         this.listener = listener;
     }
 
-    public MapAdapter(Context context, int totalLevel, int curLevel)
+    public MapAdapter(Context context, int totalLevel)
     {
         mContext = context;
         mTotalLevel = totalLevel;
-        mCurrentLevel = curLevel;
     }
 
     public class MapHolder extends RecyclerView.ViewHolder
     {
         private View mContentView;
         private TextView mLevelTextView;
+        private ImageView mStar;
 
         public MapHolder(final View view)
         {
@@ -59,6 +60,7 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.MapHolder> {
 
             mContentView = (View) view.findViewById(R.id.map_content);
             mLevelTextView = (TextView) view.findViewById(R.id.map_text);
+            mStar = (ImageView)view.findViewById(R.id.map_star);
 
             if (view == mHeaderView || view == mFooterView)
             {
@@ -104,21 +106,26 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.MapHolder> {
         if (getItemViewType(position) == TYPE_HEADER || getItemViewType(position) == TYPE_FOOTER)
             return;
 
-        if (position > mCurrentLevel)
+        int newPos = position;
+        if (mHeaderView != null)
+            --newPos;
+
+        if (newPos > Config.mCurrentLevel)
         {
             holder.mContentView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.map_item_content_nopass));
-        }else if (position < mCurrentLevel)
+            holder.mStar.setVisibility(View.INVISIBLE);
+        }else if (newPos < Config.mCurrentLevel)
         {
             holder.mContentView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.map_item_content_pass));
+            holder.mStar.setVisibility(View.VISIBLE);
         }else
         {
             holder.mContentView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.color_paht1));
+            holder.mStar.setVisibility(View.INVISIBLE);
         }
 
-        int text = position;
-        if (mHeaderView != null)
-            --text;
-        holder.mLevelTextView.setText("" + (text + 1));
+        holder.mLevelTextView.setText("" + (newPos + 1));
+
     }
 
     @Override

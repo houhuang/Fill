@@ -21,4 +21,12 @@
             android:textSize="20sp"
             android:textColor="#FFF"/>
 
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/map_star"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/star"/>
+
 </com.jd.fill.adapter.MapItemLayout>

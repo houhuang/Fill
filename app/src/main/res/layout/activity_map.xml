@@ -18,6 +18,54 @@
             android:layout_centerHorizontal="true"
             android:background="@color/toolbar_line"/>
 
+        <com.jd.fill.utilView.HequalVButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/map_back"
+            android:background="@drawable/back"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:text="Level"
+            android:textColor="#FFF"
+            android:textSize="25sp"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/map_back"
+            android:gravity="center"
+            android:layout_marginStart="10dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/map_star_bg">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:src="@drawable/star"
+                android:layout_margin="3dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/map_star_text"
+                android:textSize="15sp"
+                android:textColor="#FFF"
+                android:layout_marginEnd="3dp"
+                />
+
+        </LinearLayout>
+
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

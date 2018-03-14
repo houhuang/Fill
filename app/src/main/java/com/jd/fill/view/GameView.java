@@ -34,16 +34,11 @@ import java.util.Random;
 public class GameView extends GridLayout implements View.OnTouchListener {
     private GameItem[][] mGameMatrix;
 
-    private List<Point> mBlanks;
 
     private int mGameVLines;
     private int mGameHLines;
 
     private int mStartX, mStartY;
-
-    private int[][] mGameMatrixHistory;
-
-    private int mScoreHistory;
 
     private List<GameItem> mAlreadyClickItem = new ArrayList<GameItem>();
     private GameItem mFirstItem;
@@ -97,23 +92,19 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     public void initGameMatrix()
     {
-        mRadishWhite = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish);
-        mRadishRed = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish2);
+        mRadishWhite = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish2);
+        mRadishRed = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish);
 
-        SharedPreferences.Editor editor = Config.mSp.edit();
-        editor.putInt(Config.KEY_CURRENT_LEVEL, 11);
-        editor.commit();
 
-        mItemInfo = DataManager.getInstance().getmGameInfo().get(Config.mSp.getInt(Config.KEY_CURRENT_LEVEL, 0));
+        mItemInfo = DataManager.getInstance().getmGameInfo().get(Config.mCurrentLevel);
 
         //初始化矩阵
         removeAllViews();
-        mScoreHistory = 0;
+
 
         mGameHLines = mItemInfo.getRow();
         mGameVLines = mItemInfo.getCol();
         mGameMatrix = new GameItem[mGameHLines][mGameVLines];
-        mGameMatrixHistory = new int[mGameHLines][mGameVLines];
 
         setColumnCount(mGameVLines);
         setRowCount(mGameHLines);
@@ -309,7 +300,8 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
                                 if (isCompleted())
                                 {
-                                    Toast.makeText(getContext(), "Completed!!!", Toast.LENGTH_LONG).show();
+                                    completed();
+
                                 }
                             }
 
@@ -371,6 +363,13 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         }
 
         return true;
+    }
+
+    public void completed()
+    {
+        Config.mCurrentLevel ++;
+        Config.saveConfigInfo();
+        Toast.makeText(getContext(), "Completed!!!", Toast.LENGTH_LONG).show();
     }
 
     public void hint()
