@@ -75,6 +75,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
     public interface OnGameCompletedListener
     {
         void OnCompleted();
+        void OnHintSucc();
     }
 
     public void setGameViewListener(OnGameCompletedListener listener)
@@ -96,10 +97,13 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         initGameMatrix();
     }
 
-    public void startGame()
+    public void nextGame()
     {
-//        initGameMatrix();;
-//        initGameView(Config.mItemSize);
+
+        mHintIndex = 1;
+        mNeedClickItem = 0;
+        initGameMatrix();
+
     }
 
     public void initGameMatrix()
@@ -128,10 +132,22 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         Display display = wm.getDefaultDisplay();
         display.getMetrics(metrics);
 
-        int size = (int)(metrics.widthPixels - 20 * ScreenUtil.getScreenDensity(mContext)) / 6;
+        int sizeWidth = (int)(metrics.widthPixels - 50 * ScreenUtil.getScreenDensity(mContext)) / mGameVLines;
+        int sizeHeight = (int)(metrics.heightPixels - 300 * ScreenUtil.getScreenDensity(mContext)) / mGameHLines;
 
+        if (ScreenUtil.isTablet(mContext))
+        {
+            initGameView(sizeWidth < sizeHeight ? sizeWidth : sizeHeight);
+        }else
+        {
+            int size = mGameVLines;
+            if (mGameVLines < 6)
+            {
+                size = 6;
+            }
+            initGameView((int)(metrics.widthPixels - 50 * ScreenUtil.getScreenDensity(mContext)) / size);
+        }
 
-        initGameView(size);
     }
 
     private void initGameView(int cardSize)
@@ -246,6 +262,8 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                         mAlreadyClickItem.clear();
                         mCurrentItem = mFirstItem;
                         mCurrentItem.clearPathFromDir();
+
+                        Config.playSounds(0);
                     }else
                     {
                         int index = -1;
@@ -270,6 +288,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                             mCurrentItem = mAlreadyClickItem.get(mAlreadyClickItem.size() - 1);
                             mCurrentItem.clearPathNotFirst();
 
+                            Config.playSounds(0);
                         }else
                         {
                             int moveDir = isMoveDirFromNext(mCurrentItem, item);
@@ -315,8 +334,12 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                                     if (listener != null)
                                     {
                                         listener.OnCompleted();
+                                        Config.playSounds(1);
                                     }
 
+                                }else
+                                {
+                                    Config.playSounds(0);
                                 }
                             }
 
@@ -365,6 +388,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
                             mCurrentItem.clearPathNotFirst();
 
+                            Config.playSounds(0);
                         }
                     }
                 }
@@ -383,6 +407,9 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     public void hint()
     {
+        if (Config.mHintNum == 0)
+            return;
+
         if (mHintIndex > 3 )
         {
             Toast.makeText(mContext, "Three hints a maximum of each level.", Toast.LENGTH_SHORT).show();
@@ -462,7 +489,11 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         mCurrentItem.setRadishColor(false);
 
         mHintIndex ++;
+        --Config.mHintNum;
+        Config.saveConfigInfo();
 
+        if (listener != null)
+            listener.OnHintSucc();
     }
 
     private boolean isCompleted()

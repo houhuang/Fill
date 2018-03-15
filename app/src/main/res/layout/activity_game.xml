@@ -6,6 +6,105 @@
     android:layout_height="match_parent"
     tools:context="com.jd.fill.activity.GameActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_bg_white">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/toolbar_line"/>
+
+        <com.jd.fill.utilView.HequalVButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/game_back"
+            android:background="@drawable/back"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/game_level_text"
+            android:text="Level"
+            android:textColor="@color/map_item_content_pass"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/game_back"
+            android:gravity="center"
+            android:layout_marginStart="10dp"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/game_button_vedio"
+                android:layout_gravity="center"
+                android:src="@drawable/vedio_icon"
+                android:padding="12dp"
+                android:background="@color/color_paht1"
+                android:layout_marginBottom="1dp"/>
+
+            <RelativeLayout
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="center"
+                android:layout_marginBottom="1dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/game_button_hint"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/hint"
+                    android:padding="13dp"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/game_hint_num"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="100"
+                    android:textColor="#FFF"
+                    android:textSize="13sp"/>
+
+            </RelativeLayout>
+
+
+
+
+            <ImageView
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/game_button_home"
+                android:layout_gravity="center"
+                android:src="@drawable/home"
+                android:padding="15dp"/>
+
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
     <com.jd.fill.view.GameView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,15 +113,6 @@
         android:layout_margin="20px">
 
     </com.jd.fill.view.GameView>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_hint"
-        android:text="hint"
-        android:textSize="30sp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"/>
 
     <FrameLayout
         android:layout_width="match_parent"

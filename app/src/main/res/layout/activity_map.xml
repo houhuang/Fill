@@ -24,8 +24,8 @@
             android:id="@+id/map_back"
             android:background="@drawable/back"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp" />
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,7 +73,8 @@
         android:layout_height="match_parent"
         android:id="@+id/map_recycle"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:scrollbarStyle="insideInset">
 
     </android.support.v7.widget.RecyclerView>
 

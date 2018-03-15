@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -144,5 +145,27 @@ public class FileUtil {
         }
 
         return "";
+    }
+
+    /**
+     *  往data/data下存储数据
+     * */
+
+    public static boolean saveFileTo_datadata(Context context, String fileName, String content)
+    {
+
+
+        try {
+            FileOutputStream output = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            output.write(content.getBytes());
+            output.close();
+
+            return true;
+        }catch (Exception e)
+        {
+
+        }
+
+        return false;
     }
 }

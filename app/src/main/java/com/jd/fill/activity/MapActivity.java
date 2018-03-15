@@ -1,7 +1,9 @@
 package com.jd.fill.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,6 +19,7 @@ import com.jd.fill.R;
 import com.jd.fill.adapter.MapAdapter;
 import com.jd.fill.config.Config;
 import com.jd.fill.manager.DataManager;
+import com.jd.fill.util.GeneralUtil;
 import com.jd.fill.util.ScreenUtil;
 import com.jd.fill.util.StatusBarUtil;
 
@@ -35,6 +38,7 @@ public class MapActivity extends AppCompatActivity {
         StatusBarUtil.StatusBarLightMode(this);
 
         bindView();
+        showRateUs();
     }
 
     private void bindView()
@@ -79,6 +83,37 @@ public class MapActivity extends AppCompatActivity {
 
         mLevelText = (TextView)findViewById(R.id.map_star_text);
         updateLevel();
+    }
+
+    private void showRateUs()
+    {
+        if (!Config.mIsRateus)
+        {
+            if (Config.mRateUsCount % 5 == 0)
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Enjoy Our App?");
+                builder.setMessage("Leave us a review to show your support!  " +
+                        GeneralUtil.getEmojiString(0x2764) +
+                        GeneralUtil.getEmojiString(0x1F338) +
+                        GeneralUtil.getEmojiString(0x1F340));
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Config.mIsRateus = true;
+                        Config.saveConfigInfo();
+                        GeneralUtil.openGooglePlay(getApplicationContext());
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
+            }
+        }
     }
 
     private void updateLevel()
