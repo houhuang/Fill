@@ -105,7 +105,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mWinFragment.setOnWinFragmentListent(new WinFragment.OnWinFragmentListener() {
             @Override
             public void OnPlay() {
-                if (Config.mCurrentLevel <= DataManager.getInstance().getmGameInfo().size())
+                if (Config.mCurrentLevel < DataManager.getInstance().getmGameInfo().size())
                     nextLevel();
             }
 
@@ -128,6 +128,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     {
         mHintText.setText("" + Config.mHintNum);
         Config.mChooseLevel = Config.mCurrentLevel;
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("Level - ").append(Config.mChooseLevel + 1);
+        mLevelText.setText(builder.toString());
+
         mGameView.nextGame();
         hideWinFragment();
     }

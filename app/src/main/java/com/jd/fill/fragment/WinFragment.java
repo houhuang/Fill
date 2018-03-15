@@ -93,6 +93,8 @@ public class WinFragment extends Fragment implements View.OnClickListener {
         {
             mHintView.setVisibility(View.VISIBLE);
             Config.mHintNum ++;
+            Config.saveConfigInfo();
+
         }else
         {
             mHintView.setVisibility(View.GONE);
