@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -46,14 +47,18 @@ public class LeftAndTopView extends View {
 
     private ItemDir mItemDIr = ItemDir.NONE;
 
+    private Context mContext;
+
     public LeftAndTopView(Context context, ItemType type, int color) {
         super(context);
+        mContext = context;
         initPainType(type, color);
     }
 
     public LeftAndTopView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initPainType(ItemType.Level, getResources().getColor(R.color.colorAccent));
+//        mContext = context;
+//        initPainType(ItemType.Level, getResources().getColor(R.color.colorAccent));
     }
 
     public void initPainType(ItemType type, int color)
@@ -68,8 +73,7 @@ public class LeftAndTopView extends View {
 
 
         mPaint = new Paint();
-
-        mPaint.setColor(getResources().getColor(mColor));
+        mPaint.setColor(ContextCompat.getColor(mContext ,mColor));
         mPaint.setStyle(Paint.Style.FILL);
 
 
@@ -161,16 +165,18 @@ public class LeftAndTopView extends View {
             canvas.drawRect(new Rect((int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
                     0,
                     (int) (getMeasuredWidth() * ITEM_WIDTH),
-                    (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
+                    (int) (getMeasuredHeight() * 0.5)), mPaint);
+            canvas.drawCircle(getMeasuredWidth()/2, getMeasuredHeight()/2, getMeasuredWidth()/4, mPaint);
 
         }
 
         if (DrawBottom)
         {
             canvas.drawRect(new Rect((int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
-                    (int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
+                    (int) (getMeasuredHeight() * 0.5),
                     (int) (getMeasuredWidth() * ITEM_WIDTH),
                     (int) (getMeasuredHeight() * 1.0)), mPaint);
+            canvas.drawCircle(getMeasuredWidth()/2, getMeasuredHeight()/2, getMeasuredWidth()/4, mPaint);
 
         }
 
@@ -178,17 +184,19 @@ public class LeftAndTopView extends View {
         {
             canvas.drawRect(new Rect(0,
                     (int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
-                    (int) (getMeasuredWidth() * ITEM_WIDTH),
+                    (int) (getMeasuredWidth() * 0.5),
                     (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
+            canvas.drawCircle(getMeasuredWidth()/2, getMeasuredHeight()/2, getMeasuredWidth()/4, mPaint);
 
         }
 
         if (DrawRight)
         {
-            canvas.drawRect(new Rect((int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
+            canvas.drawRect(new Rect((int) (getMeasuredHeight() * 0.5),
                     (int) (getMeasuredHeight() * (1 - ITEM_WIDTH)),
                     (int) (getMeasuredWidth() * 1.0),
                     (int) (getMeasuredHeight() * ITEM_WIDTH)), mPaint);
+            canvas.drawCircle(getMeasuredWidth()/2, getMeasuredHeight()/2, getMeasuredWidth()/4, mPaint);
 
         }
 
