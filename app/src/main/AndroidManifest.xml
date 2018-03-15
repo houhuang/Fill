@@ -14,7 +14,8 @@
 
         <activity android:name=".activity.MapActivity"></activity>
         <activity android:name=".activity.GameActivity"></activity>
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

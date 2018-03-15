@@ -74,7 +74,8 @@
         android:id="@+id/map_recycle"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:scrollbarStyle="insideInset">
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideOverlay">
 
     </android.support.v7.widget.RecyclerView>
 
