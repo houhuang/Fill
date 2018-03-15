@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.jd.fill.R;
 import com.jd.fill.config.Config;
 import com.jd.fill.fragment.WinFragment;
@@ -44,6 +47,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private int mAdsCount = 0;
 
+    private AdView mAdView;
+    private AdRequest mAdRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +57,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         StatusBarUtil.setWindowStatusBarColor(this, R.color.status_bar_map_color);
         StatusBarUtil.StatusBarLightMode(this);
+
+        mAdView = (AdView) findViewById(R.id.banner_View);
+        mAdRequest = new AdRequest.Builder().addTestDevice("9B91B1E26590A312CE79F38C409461E9").build();
+        mAdView.loadAd(mAdRequest);
+        mAdView.setAdListener(new AdListener(){
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                mAdView.loadAd(mAdRequest);
+            }
+        });
 
         bindView();
     }
@@ -155,11 +173,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void hideWinFragment()
     {
-       mFragmentParent.setVisibility(View.GONE);
+        mAdView.setVisibility(View.VISIBLE);
+        mFragmentParent.setVisibility(View.GONE);
     }
 
     private void showWinFragment()
     {
+        mAdView.setVisibility(View.INVISIBLE);
         mWinFragment.updateContent();
         mFragmentParent.setVisibility(View.VISIBLE);
 

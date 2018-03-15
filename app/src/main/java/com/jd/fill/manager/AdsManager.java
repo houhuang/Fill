@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
@@ -20,8 +21,8 @@ public class AdsManager {
     public static final String MOPUB_ID = "ca-app-pub-9291877653530829~5145474886";
 
     public static final String ADS_VEDIO_ID = "ca-app-pub-9291877653530829/2831971033";
-    public static final String ADS_FULL_ID = "ca-app-pub-9291877653530829/3458656998";
-    public static final String ADS_BANNER_ID = "ca-app-pub-9291877653530829/3458656998";
+    public static final String ADS_FULL_ID = "ca-app-pub-9291877653530829/7014758627";
+
 
     public static InterstitialAd mInterstitialAd;
     public static RewardedVideoAd mRewardedVideoAd;
@@ -47,9 +48,9 @@ public class AdsManager {
     {
         mContext = context;
 
-        MobileAds.initialize(context, "ca-app-pub-9291877653530829~8013269311");
+        MobileAds.initialize(context, MOPUB_ID);
 
-        mAdRequest = new AdRequest.Builder().build();
+        mAdRequest = new AdRequest.Builder().addTestDevice("9B91B1E26590A312CE79F38C409461E9").build();
 
         initIntertitialAd();
         initRewardAds();
