@@ -419,8 +419,12 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         }
 
         int count = mHintIndex * 5;
-        if (count > mNeedClickItem)
-            count = mNeedClickItem;
+        if (count >= mNeedClickItem - 1)
+        {
+            count = mNeedClickItem - 1;
+            mHintIndex = 4;
+        }
+
 
         for (int i = 0; i < mAlreadyClickItem.size(); ++i)
         {

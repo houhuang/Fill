@@ -134,7 +134,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void OnHome() {
-                AdsManager.mEnableShowIntertital = true;
+                if (Config.mCurrentLevel > 5)
+                    AdsManager.mEnableShowIntertital = true;
                 Intent intent = new Intent(GameActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -190,7 +191,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.game_back:
-                AdsManager.mEnableShowIntertital = true;
+                if (Config.mCurrentLevel > 5)
+                    AdsManager.mEnableShowIntertital = true;
                 finish();
                 break;
             case R.id.game_button_hint:
@@ -198,7 +200,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.game_button_home:
-                AdsManager.mEnableShowIntertital = true;
+                if (Config.mCurrentLevel > 5)
+                    AdsManager.mEnableShowIntertital = true;
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
@@ -236,6 +239,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        AdsManager.mEnableShowIntertital = true;
+        if (Config.mCurrentLevel > 5)
+            AdsManager.mEnableShowIntertital = true;
     }
 }
