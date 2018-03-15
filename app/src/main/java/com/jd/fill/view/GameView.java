@@ -241,9 +241,48 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                     }
                 }else
                 {
+                    clickItem = isClickAlreadyExitTarget(mStartX, mStartY);
 
+                    if (clickItem != null)
+                    {
+                        isClickStartTarget = true;
+                        int index = -1;
+                        for (int i = 0; i < mAlreadyClickItem.size(); ++i)
+                        {
+                            if (mAlreadyClickItem.get(i) == clickItem)
+                            {
+                                index = i;
+                            }
+                        }
+
+                        if (index != -1)
+                        {
+                            int count = mAlreadyClickItem.size() - index - 1;
+
+                            for (int i = 0; i < count; ++i)
+                            {
+                                mAlreadyClickItem.get(mAlreadyClickItem.size() - 1).clearPathFromDir();
+
+                                mAlreadyClickItem.get(mAlreadyClickItem.size() - 1).setRadishColor(true);
+                                mAlreadyClickItem.remove(mAlreadyClickItem.size() - 1);
+                            }
+
+                            if (index == 0)
+                            {
+                                mCurrentItem = mFirstItem;
+                                mCurrentItem.clearPathFromDir();
+                            }else
+                            {
+                                mCurrentItem = mAlreadyClickItem.get(mAlreadyClickItem.size() - 1);
+                            }
+
+                            mCurrentItem.clearPathNotFirst();
+
+                            Config.playSounds(0);
+                        }
+                    }
                 }
-                clickItem = isClickAlreadyExitTarget(mStartX, mStartY);
+
             }
             break;
 
@@ -353,44 +392,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
             {
 //                if (!isClickStartTarget)
                 {
-                    if (clickItem != null && Math.abs(event.getX() - mStartX) < 10 &&
-                            Math.abs(event.getY() - mStartY ) < 10)
-                    {
-                        int index = -1;
-                        for (int i = 0; i < mAlreadyClickItem.size(); ++i)
-                        {
-                            if (mAlreadyClickItem.get(i) == clickItem)
-                            {
-                                index = i;
-                            }
-                        }
 
-                        if (index != -1)
-                        {
-                            int count = mAlreadyClickItem.size() - index;
-
-                            for (int i = 0; i < count; ++i)
-                            {
-                                mAlreadyClickItem.get(mAlreadyClickItem.size() - 1).clearPathFromDir();
-
-                                mAlreadyClickItem.get(mAlreadyClickItem.size() - 1).setRadishColor(true);
-                                mAlreadyClickItem.remove(mAlreadyClickItem.size() - 1);
-                            }
-
-                            if (mAlreadyClickItem.size() == 0)
-                            {
-                                mCurrentItem = mFirstItem;
-                                mCurrentItem.clearPathFromDir();
-                            }else
-                            {
-                                mCurrentItem = mAlreadyClickItem.get(mAlreadyClickItem.size() - 1);
-                            }
-
-                            mCurrentItem.clearPathNotFirst();
-
-                            Config.playSounds(0);
-                        }
-                    }
                 }
 
 
