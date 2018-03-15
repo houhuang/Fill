@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.jd.fill.R;
 import com.jd.fill.adapter.MapAdapter;
 import com.jd.fill.config.Config;
+import com.jd.fill.manager.AdsManager;
 import com.jd.fill.manager.DataManager;
 import com.jd.fill.util.GeneralUtil;
 import com.jd.fill.util.ScreenUtil;
@@ -128,5 +129,9 @@ public class MapActivity extends AppCompatActivity {
         super.onResume();
         mMapAdapter.notifyDataSetChanged();
         updateLevel();
+
+        if (AdsManager.mEnableShowIntertital)
+            AdsManager.showIntertitialAd();
+        AdsManager.mEnableShowIntertital = false;
     }
 }

@@ -1,9 +1,11 @@
 package com.jd.fill.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import com.jd.fill.R;
 import com.jd.fill.config.Config;
 import com.jd.fill.fragment.WinFragment;
+import com.jd.fill.manager.AdsManager;
 import com.jd.fill.manager.DataManager;
 import com.jd.fill.util.GeneralUtil;
 import com.jd.fill.util.StatusBarUtil;
@@ -38,6 +41,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView mLevelText;
     private TextView mHintText;
+
+    private int mAdsCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,12 +110,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mWinFragment.setOnWinFragmentListent(new WinFragment.OnWinFragmentListener() {
             @Override
             public void OnPlay() {
-                if (Config.mCurrentLevel < DataManager.getInstance().getmGameInfo().size())
+                if (Config.mChooseLevel < DataManager.getInstance().getmGameInfo().size() - 1)
                     nextLevel();
             }
 
             @Override
             public void OnHome() {
+                AdsManager.mEnableShowIntertital = true;
                 Intent intent = new Intent(GameActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -135,6 +141,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         mGameView.nextGame();
         hideWinFragment();
+
+        if (Config.mCurrentLevel > 10)
+        {
+            mAdsCount ++;
+            if (mAdsCount > 4)
+            {
+                mAdsCount = 0;
+                AdsManager.showIntertitialAd();
+            }
+        }
     }
 
     private void hideWinFragment()
@@ -154,6 +170,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.game_back:
+                AdsManager.mEnableShowIntertital = true;
                 finish();
                 break;
             case R.id.game_button_hint:
@@ -161,16 +178,44 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.game_button_home:
+                AdsManager.mEnableShowIntertital = true;
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.game_button_vedio:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Do you watch the video ads?")
+                        .setMessage("You can get more hint when you watch the video ads.Would you like to watch?")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                AdsManager.showRewardAds();
+                                AdsManager.setRewardDelegate(new AdsManager.RewardAdsDelegate() {
+                                    @Override
+                                    public void onRewardExpanded() {
+                                        Config.mHintNum += 2;
+                                        Config.saveConfigInfo();
+                                        mHintText.setText("" + Config.mHintNum);
+                                    }
+                                });
+                            }
+                        }).
+                        setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
                 break;
             default:
                 break;
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AdsManager.mEnableShowIntertital = true;
+    }
 }

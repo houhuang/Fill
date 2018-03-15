@@ -89,7 +89,7 @@ public class WinFragment extends Fragment implements View.OnClickListener {
         mLevelText.setText(builder.toString());
 
         if ((Config.mChooseLevel == Config.mCurrentLevel) &&
-                ((Config.mCurrentLevel + 1) % 5 == 0))
+                ((Config.mCurrentLevel + 1) % 10 == 0))
         {
             mHintView.setVisibility(View.VISIBLE);
             Config.mHintNum ++;

@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.jd.fill.R;
 import com.jd.fill.config.Config;
+import com.jd.fill.manager.AdsManager;
 import com.jd.fill.manager.DataManager;
 import com.jd.fill.util.FileUtil;
 import com.jd.fill.util.GeneralUtil;
@@ -52,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bindView();
 
         downloadJsonFile();
+        Crashlytics.getInstance();
+
+        AdsManager.initAds(getApplicationContext());
     }
 
     private void bindView()
@@ -157,5 +163,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         Config.stopMusic();
+        AdsManager.getRewardAdsInstance().destroy(getApplicationContext());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (AdsManager.mEnableShowIntertital)
+            AdsManager.showIntertitialAd();
+        AdsManager.mEnableShowIntertital = false;
     }
 }
