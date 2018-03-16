@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jd.fill.R;
@@ -128,6 +129,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         mRadishWhite = mRabishs.get(rIdx * 2 + 1);
         mRadishRed = mRabishs.get(rIdx * 2);
 
+        mAlreadyClickItem.clear();
 
         mItemInfo = DataManager.getInstance().getmGameInfo().get(Config.mChooseLevel);
 
@@ -164,6 +166,13 @@ public class GameView extends GridLayout implements View.OnTouchListener {
             }
             initGameView((int)(metrics.widthPixels - 50 * ScreenUtil.getScreenDensity(mContext)) / size);
         }
+
+//        if (Config.mChooseLevel == 0)
+//        {
+//            ImageView tourist = new ImageView(mContext);
+//            tourist.setImageBitmap(FileUtil.getBitmapFromDrawable(mContext, R.drawable.touris));
+//            addView(tourist);
+//        }
 
     }
 
@@ -204,7 +213,6 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
                 card = new GameItem(getContext(), isTrue, mPathColor[cIndex], mRadishRed, mRadishWhite);
                 addView(card, cardSize, cardSize);
-
 
                 // 初始化GameMatrix全部为0 空格List为所有
                 mGameMatrix[i][j] = card;

@@ -147,6 +147,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        updateTourist();
     }
 
     private void nextLevel()
@@ -170,6 +171,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 AdsManager.showIntertitialAd();
             }
         }
+
+        updateTourist();
     }
 
     private void hideWinFragment()
@@ -234,6 +237,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             default:
                 break;
+        }
+    }
+
+    private void updateTourist()
+    {
+        ImageView tourist = (ImageView)findViewById(R.id.game_tourist);
+        if (Config.mChooseLevel == 0)
+        {
+            tourist.setVisibility(View.VISIBLE);
+        }else
+        {
+            tourist.setVisibility(View.INVISIBLE);
         }
     }
 

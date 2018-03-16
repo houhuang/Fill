@@ -77,6 +77,7 @@ public class AdsManager {
                 mInterstitialAd.loadAd(mAdRequest);
             }
         });
+
     }
 
     public static void initRewardAds()
