@@ -56,6 +56,8 @@ public class GameView extends GridLayout implements View.OnTouchListener {
     private Bitmap mRadishWhite;
     private Bitmap mRadishRed;
 
+    private List<Bitmap> mRabishs = new ArrayList<Bitmap>();
+
     private int mHintIndex = 1;
 
     private int[] mPathColor = {
@@ -87,6 +89,12 @@ public class GameView extends GridLayout implements View.OnTouchListener {
     {
         super(context);
         mContext = context;
+
+        mRabishs.add(FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish3_h));
+        mRabishs.add(FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish3_d));
+        mRabishs.add(FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish4_h));
+        mRabishs.add(FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish4_d));
+
         initGameMatrix();
     }
 
@@ -94,6 +102,12 @@ public class GameView extends GridLayout implements View.OnTouchListener {
     {
         super(context, attrs);
         mContext = context;
+
+        mRabishs.add(FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish3_h));
+        mRabishs.add(FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish3_d));
+        mRabishs.add(FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish4_h));
+        mRabishs.add(FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish4_d));
+
         initGameMatrix();
     }
 
@@ -108,8 +122,11 @@ public class GameView extends GridLayout implements View.OnTouchListener {
 
     public void initGameMatrix()
     {
-        mRadishWhite = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish2);
-        mRadishRed = FileUtil.getBitmapFromDrawable(mContext, R.drawable.radish);
+        Random random = new Random();
+        int rIdx = random.nextInt(2);
+
+        mRadishWhite = mRabishs.get(rIdx * 2 + 1);
+        mRadishRed = mRabishs.get(rIdx * 2);
 
 
         mItemInfo = DataManager.getInstance().getmGameInfo().get(Config.mChooseLevel);
