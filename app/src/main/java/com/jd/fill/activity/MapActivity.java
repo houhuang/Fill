@@ -84,6 +84,8 @@ public class MapActivity extends AppCompatActivity {
 
         mLevelText = (TextView)findViewById(R.id.map_star_text);
         updateLevel();
+
+
     }
 
     private void showRateUs()
@@ -124,11 +126,32 @@ public class MapActivity extends AppCompatActivity {
         mLevelText.setText(builder.toString());
     }
 
+    private void updateRecycleOffset()
+    {
+        int pos = 0;
+        if (ScreenUtil.isTablet(this))
+        {
+            pos = Config.mCurrentLevel - 7;
+        }else
+        {
+            pos = Config.mCurrentLevel - 5;
+        }
+
+        if (pos < 0)
+            pos = 0;
+
+        GridLayoutManager gl = (GridLayoutManager)mRecycleView.getLayoutManager();
+        gl.scrollToPositionWithOffset(pos, 0);
+        gl.setStackFromEnd(false);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         mMapAdapter.notifyDataSetChanged();
         updateLevel();
+
+        updateRecycleOffset();
 
         if (AdsManager.mEnableShowIntertital)
             AdsManager.showIntertitialAd();
