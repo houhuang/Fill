@@ -203,6 +203,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (Config.mCurrentLevel > 5)
                     AdsManager.mEnableShowIntertital = true;
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
 
@@ -241,5 +242,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onBackPressed();
         if (Config.mCurrentLevel > 5)
             AdsManager.mEnableShowIntertital = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         bindView();
 
-        downloadJsonFile();
+//        downloadJsonFile();
         Crashlytics.getInstance();
 
         AdsManager.initAds(getApplicationContext());
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (!isQuit)
         {
-            Toast.makeText(MainActivity.this, "Press again to exit the game！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Please click BACK again to exit!", Toast.LENGTH_SHORT).show();
             isQuit = true;
             new Thread(new Runnable() {
                 @Override

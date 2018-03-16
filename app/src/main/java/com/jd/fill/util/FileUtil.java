@@ -74,6 +74,7 @@ public class FileUtil {
 
                 if (str.length() != itemInfo.getCol() * itemInfo.getRow())
                 {
+//                    Log.d("TTTT", String.valueOf(i));
                     continue;
                 }else
                 {

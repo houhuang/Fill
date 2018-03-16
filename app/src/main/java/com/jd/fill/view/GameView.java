@@ -406,7 +406,6 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         return true;
     }
 
-
     public void hint()
     {
         if (Config.mHintNum == 0)
@@ -419,9 +418,10 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         }
 
         int count = mHintIndex * 5;
-        if (count >= mNeedClickItem - 1)
+
+        if (mItemInfo.getHint().length < 15)
         {
-            count = mNeedClickItem - 1;
+            count = mItemInfo.getHint().length;
             mHintIndex = 4;
         }
 

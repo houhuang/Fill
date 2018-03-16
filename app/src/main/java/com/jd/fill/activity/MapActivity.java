@@ -134,4 +134,9 @@ public class MapActivity extends AppCompatActivity {
             AdsManager.showIntertitialAd();
         AdsManager.mEnableShowIntertital = false;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
