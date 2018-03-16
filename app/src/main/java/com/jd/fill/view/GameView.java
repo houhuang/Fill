@@ -141,9 +141,9 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         }else
         {
             int size = mGameVLines;
-            if (mGameVLines < 6)
+            if (mGameVLines < 5)
             {
-                size = 6;
+                size = 5;
             }
             initGameView((int)(metrics.widthPixels - 50 * ScreenUtil.getScreenDensity(mContext)) / size);
         }
