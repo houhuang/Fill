@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.jd.fill.R;
 import com.jd.fill.config.Config;
+import com.jd.fill.manager.DataManager;
 
 import org.w3c.dom.Text;
 
@@ -53,6 +54,7 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.MapHolder> {
         private View mContentView;
         private TextView mLevelTextView;
         private ImageView mStar;
+        private TextView mStageText;
 
         public MapHolder(final View view)
         {
@@ -61,6 +63,7 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.MapHolder> {
             mContentView = (View) view.findViewById(R.id.map_content);
             mLevelTextView = (TextView) view.findViewById(R.id.map_text);
             mStar = (ImageView)view.findViewById(R.id.map_star);
+            mStageText = (TextView)view.findViewById(R.id.map_stage_text);
 
             if (view == mHeaderView || view == mFooterView)
             {
@@ -114,14 +117,26 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.MapHolder> {
         {
             holder.mContentView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.map_item_content_nopass));
             holder.mStar.setVisibility(View.INVISIBLE);
+            holder.mStageText.setVisibility(View.VISIBLE);
         }else if (newPos < Config.mCurrentLevel)
         {
             holder.mContentView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.map_item_content_pass));
             holder.mStar.setVisibility(View.VISIBLE);
+            holder.mStageText.setVisibility(View.INVISIBLE);
         }else
         {
-            holder.mContentView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.color_paht1));
+            holder.mContentView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.purple_button));
             holder.mStar.setVisibility(View.INVISIBLE);
+            holder.mStageText.setVisibility(View.VISIBLE);
+        }
+
+        if (newPos >= Config.mCurrentLevel)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.append(DataManager.getInstance().getmGameInfo().get(newPos).getRow())
+                    .append("x")
+                    .append(DataManager.getInstance().getmGameInfo().get(newPos).getCol());
+            holder.mStageText.setText(builder.toString());
         }
 
         holder.mLevelTextView.setText("" + (newPos + 1));

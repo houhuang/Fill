@@ -11,6 +11,7 @@
     <color name="status_bar_map_color">#33999999</color>
     <color name="toolbar_line">#888888</color>
 
+    <color name="map_item_stage">#88BBBBBB</color>
     <color name="map_item_bg">#55999999</color>
     <color name="map_item_content_pass">#26AF55</color>
     <color name="map_item_content_nopass">#767676</color>

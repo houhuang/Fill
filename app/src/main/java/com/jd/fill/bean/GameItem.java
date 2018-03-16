@@ -3,6 +3,7 @@ package com.jd.fill.bean;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
 import android.view.Gravity;
 import android.view.View;
@@ -41,7 +42,9 @@ public class GameItem extends FrameLayout {
 
     private final int[] stone = {R.drawable.ston1, R.drawable.ston2,
             R.drawable.ston3, R.drawable.ston4,
-            R.drawable.ston5, R.drawable.ston6};
+            R.drawable.ston5, R.drawable.ston6,
+            R.drawable.ston7, R.drawable.ston8,
+            R.drawable.ston9};
 
     private final int[] rabbit = {R.drawable.rabbit1, R.drawable.rabbit2, R.drawable.rabbit3};
 
@@ -68,10 +71,10 @@ public class GameItem extends FrameLayout {
 
         if (isWhite)
         {
-            view.setBackgroundColor(getResources().getColor(R.color.color_bg_white));
+            view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.color_bg_white));
         }else
         {
-            view.setBackgroundColor(getResources().getColor(R.color.color_bg_black));
+            view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.color_bg_black));
         }
 
 
@@ -173,7 +176,7 @@ public class GameItem extends FrameLayout {
         if (mItemTag == 0)
         {
             Random random = new Random();
-            int id = random.nextInt(6);
+            int id = random.nextInt(9);
 
             contentImage.setImageBitmap(FileUtil.getBitmapFromDrawable(mContext, stone[id]));
             float scaleX = 0.7F;

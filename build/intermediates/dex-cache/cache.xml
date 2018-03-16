@@ -1,12 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" >
-
-    <item
-        jar="/Users/houhuang/Desktop/Git/Fill/app/build/intermediates/exploded-aar/cn.gavinliu.android.lib/ShapedImageView/0.4/jars/classes.jar"
-        jumboMode="false"
-        revision="25.0.2"
-        sha1="24e45ec1593aef51584bbbdaa571ac308b97bb28">
-        <dex dex="/Users/houhuang/Desktop/Git/Fill/app/build/intermediates/pre-dexed/debug/cn.gavinliu.android.lib-ShapedImageView-0.4_a616bb1568d39471faec66b3f14c171b5491449f.jar" />
-    </item>
-
-</items>
+<items version="2" />
