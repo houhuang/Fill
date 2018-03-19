@@ -32,4 +32,9 @@
     <color name="purple_button">#C150AD</color>
     <color name="orange_button">#FF8282</color>
 
+    <color name="color_iq_text1">#1c99c7</color>
+    <color name="color_iq_text2">#38831e</color>
+    <color name="color_iq_text3">#b18701</color>
+    <color name="color_iq_text4">#a84a00</color>
+    <color name="color_iq_text5">#751286</color>
 </resources>

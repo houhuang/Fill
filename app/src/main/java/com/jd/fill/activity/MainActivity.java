@@ -3,17 +3,21 @@ package com.jd.fill.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.jd.fill.R;
 import com.jd.fill.config.Config;
+import com.jd.fill.fragment.AchievementFragment;
 import com.jd.fill.manager.AdsManager;
 import com.jd.fill.manager.DataManager;
 import com.jd.fill.util.FileUtil;
@@ -33,9 +37,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnPlay;
     private Button mBtnSounds;
     private Button mBtnShare;
+    private Button mBtnAchi;
 
     private ImageView mSoundImage;
     private Context mContext;
+
+    private FragmentTransaction mTransition;
+    private AchievementFragment achievementFragment;
+
+    private FrameLayout mAchiBg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +75,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnPlay = (Button)findViewById(R.id.btn_play);
         mBtnShare = (Button)findViewById(R.id.btn_share);
         mBtnSounds = (Button)findViewById(R.id.btn_sound);
+        mBtnAchi = (Button)findViewById(R.id.btn_achi);
         mBtnPlay.setOnClickListener(this);
         mBtnShare.setOnClickListener(this);
         mBtnSounds.setOnClickListener(this);
+        mBtnAchi.setOnClickListener(this);
+
 
         mSoundImage = (ImageView)findViewById(R.id.image_sounds);
         updateSoundState();
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        mTransition = fragmentManager.beginTransaction();
+        achievementFragment = new AchievementFragment();
+        mTransition.add(R.id.achievement_fragment_parent, achievementFragment);
+        mTransition.commit();
+
+        mAchiBg = (FrameLayout)findViewById(R.id.achievement_fragment_parent);
+        mAchiBg.setVisibility(View.INVISIBLE);
+
+        achievementFragment.setOnAchieveListener(new AchievementFragment.OnAchieveClickListener() {
+            @Override
+            public void OnHomeButton() {
+                mAchiBg.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     private void downloadJsonFile()
@@ -101,9 +129,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, MapActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.btn_share:
                 GeneralUtil.shareText(this);
                 break;
+
             case R.id.btn_sound:
                 Config.mSoundsIsOpen = !Config.mSoundsIsOpen;
                 updateSoundState();
@@ -112,6 +142,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else
                     Config.pauseMusic();
                 break;
+
+            case R.id.btn_achi:
+                mAchiBg.setVisibility(View.VISIBLE);
+                break;
+
             default:
                 break;
         }

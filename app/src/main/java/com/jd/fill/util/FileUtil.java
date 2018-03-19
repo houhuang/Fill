@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -16,8 +17,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -168,5 +171,35 @@ public class FileUtil {
         }
 
         return false;
+    }
+
+    public static boolean savePictureToSDCard(Bitmap bitmap, String fileName)
+    {
+        if (bitmap == null)
+            return false;
+
+        File foder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Fill");
+        if (!foder.exists())
+        {
+            foder.mkdirs();
+        }
+
+        File myCaptureFile = new File(foder, fileName);
+        try {
+
+            if (!myCaptureFile.exists())
+                myCaptureFile.createNewFile();
+
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, bos);
+            bos.flush();
+            bos.close();
+
+        }catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return true;
     }
 }
