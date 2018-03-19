@@ -326,6 +326,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
                         mAlreadyClickItem.clear();
                         mCurrentItem = mFirstItem;
                         mCurrentItem.clearPathFromDir();
+                        mAlreadyClickItem.add(mCurrentItem);
 
                         Config.playSounds(0);
                     }else
@@ -439,7 +440,7 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         if (mHintIndex > 3 )
         {
             Toast.makeText(mContext, "Three hints a maximum of each level.", Toast.LENGTH_SHORT).show();
-            return;
+//            return;
         }
 
         int count = mHintIndex * 5;
@@ -447,7 +448,10 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         if (mItemInfo.getHint().length < 15)
         {
             count = mItemInfo.getHint().length;
-            mHintIndex = 4;
+            mHintIndex = 10;
+        }else if (mHintIndex > 3)
+        {
+            count = 15;
         }
 
 
@@ -519,12 +523,16 @@ public class GameView extends GridLayout implements View.OnTouchListener {
         mCurrentItem.showPathFromDir();
         mCurrentItem.setRadishColor(false);
 
-        mHintIndex ++;
-        --Config.mHintNum;
-        Config.saveConfigInfo();
+        if (mHintIndex <= 3 || mHintIndex == 10)
+        {
+            mHintIndex ++;
+            --Config.mHintNum;
+            Config.saveConfigInfo();
 
-        if (listener != null)
-            listener.OnHintSucc();
+            if (listener != null)
+                listener.OnHintSucc();
+        }
+
     }
 
     private boolean isCompleted()

@@ -81,7 +81,7 @@ public class WinFragment extends Fragment implements View.OnClickListener {
         StringBuilder builder = new StringBuilder();
         builder.append("Level - ").append(Config.mChooseLevel + 1);
 
-        if ((Config.mChooseLevel == Config.mCurrentLevel) && Config.mCurrentLevel == DataManager.getInstance().getmGameInfo().size() - 1)
+        if ((Config.mChooseLevel == Config.mCurrentLevel) && Config.mCurrentLevel >= DataManager.getInstance().getmGameInfo().size() - 1)
         {
             builder.append("- Max");
         }

@@ -1,6 +1,7 @@
 package com.jd.fill.manager;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -23,6 +24,7 @@ public class AdsManager {
     public static final String ADS_VEDIO_ID = "ca-app-pub-9291877653530829/2831971033";
     public static final String ADS_FULL_ID = "ca-app-pub-9291877653530829/7014758627";
 
+    public static final String TEST_DEVICE_ID = "9B91B1E26590A312CE79F38C409461E9t";
 
     public static InterstitialAd mInterstitialAd;
     public static RewardedVideoAd mRewardedVideoAd;
@@ -34,6 +36,7 @@ public class AdsManager {
     public interface RewardAdsDelegate
     {
         void onRewardExpanded();
+        void onRewardLoadFaild();
     }
 
     public static RewardAdsDelegate mDelegate;
@@ -50,11 +53,10 @@ public class AdsManager {
 
         MobileAds.initialize(context, MOPUB_ID);
 
-        mAdRequest = new AdRequest.Builder().addTestDevice("9B91B1E26590A312CE79F38C409461E9").build();
+        mAdRequest = new AdRequest.Builder().addTestDevice(TEST_DEVICE_ID).build();
 
         initIntertitialAd();
         initRewardAds();
-
 
     }
 
@@ -86,29 +88,28 @@ public class AdsManager {
         mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
             @Override
             public void onRewardedVideoAdLoaded() {
-
             }
 
             @Override
             public void onRewardedVideoAdOpened() {
-                if (mDelegate != null)
-                    mDelegate.onRewardExpanded();
+
 
             }
 
             @Override
             public void onRewardedVideoStarted() {
-
             }
 
             @Override
             public void onRewardedVideoAdClosed() {
                 mRewardedVideoAd.loadAd(ADS_VEDIO_ID,mAdRequest);
+
             }
 
             @Override
             public void onRewarded(RewardItem rewardItem) {
-
+                if (mDelegate != null)
+                    mDelegate.onRewardExpanded();
             }
 
             @Override
@@ -135,6 +136,10 @@ public class AdsManager {
         if (mRewardedVideoAd.isLoaded())
         {
             mRewardedVideoAd.show();
+        }else
+        {
+            if (mDelegate != null)
+                mDelegate.onRewardLoadFaild();
         }
     }
 

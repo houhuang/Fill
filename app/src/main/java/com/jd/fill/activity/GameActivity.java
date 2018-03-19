@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -59,7 +60,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         StatusBarUtil.StatusBarLightMode(this);
 
         mAdView = (AdView) findViewById(R.id.banner_View);
-        mAdRequest = new AdRequest.Builder().addTestDevice("9B91B1E26590A312CE79F38C409461E9").build();
+        mAdRequest = new AdRequest.Builder().addTestDevice(AdsManager.TEST_DEVICE_ID).build();
         mAdView.loadAd(mAdRequest);
         mAdView.setAdListener(new AdListener(){
 
@@ -154,6 +155,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     {
         mHintText.setText("" + Config.mHintNum);
         Config.mChooseLevel = Config.mCurrentLevel;
+        if (Config.mChooseLevel == DataManager.getInstance().getmGameInfo().size())
+        {
+            Config.mChooseLevel = DataManager.getInstance().getmGameInfo().size() - 1;
+        }
 
         StringBuilder builder = new StringBuilder();
         builder.append("Level - ").append(Config.mChooseLevel + 1);
@@ -164,8 +169,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         if (Config.mCurrentLevel > 10)
         {
-            mAdsCount ++;
-            if (mAdsCount > 4)
+
+            if (Config.mChooseLevel < 50)
+            {
+                mAdsCount += 2;
+            }else if (Config.mChooseLevel < 250)
+            {
+                mAdsCount += 4;
+            }else if (Config.mChooseLevel < 700)
+            {
+                mAdsCount += 5;
+            }else
+            {
+                mAdsCount += 10;
+            }
+
+            if (mAdsCount >= 10)
             {
                 mAdsCount = 0;
                 AdsManager.showIntertitialAd();
@@ -194,7 +213,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.game_back:
-                if (Config.mCurrentLevel > 5)
+                if (Config.mCurrentLevel > 10)
                     AdsManager.mEnableShowIntertital = true;
                 finish();
                 break;
@@ -203,7 +222,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.game_button_home:
-                if (Config.mCurrentLevel > 5)
+                if (Config.mCurrentLevel > 10)
                     AdsManager.mEnableShowIntertital = true;
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -224,6 +243,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                                         Config.mHintNum += 2;
                                         Config.saveConfigInfo();
                                         mHintText.setText("" + Config.mHintNum);
+                                    }
+
+                                    @Override
+                                    public void onRewardLoadFaild() {
+                                        Toast.makeText(GameActivity.this, "Video ad loads failed! You can try later!", Toast.LENGTH_LONG).show();
                                     }
                                 });
                             }
@@ -255,7 +279,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (Config.mCurrentLevel > 5)
+        if (Config.mCurrentLevel > 10)
             AdsManager.mEnableShowIntertital = true;
     }
 
