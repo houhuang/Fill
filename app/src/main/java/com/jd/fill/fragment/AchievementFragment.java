@@ -151,7 +151,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
 
     }
 
-    private void caculateIQNum()
+    public void caculateIQNum()
     {
         double iQNum = 0;
         for (int i = 0; i < Config.mCurrentLevel; ++i)

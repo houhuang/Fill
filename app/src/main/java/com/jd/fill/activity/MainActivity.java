@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         bindView();
 
-//        downloadJsonFile();
+        downloadJsonFile();
         Crashlytics.getInstance();
 
         AdsManager.initAds(getApplicationContext());
@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_achi:
+                achievementFragment.caculateIQNum();
                 mAchiBg.setVisibility(View.VISIBLE);
                 break;
 

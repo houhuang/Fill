@@ -3,7 +3,7 @@
     <item >
         <shape android:shape="rectangle">
             <solid android:color="#333333"/>
-            <corners android:radius="?attr/actionBarSize"/>
+            <corners android:radius="50dp"/>
         </shape>
     </item>
 </selector>
